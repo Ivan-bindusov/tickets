@@ -39,6 +39,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'users_roles');
@@ -89,5 +94,13 @@ class User extends Authenticatable
         $permissions = $this->getAllPermissions($permissions);
         $this->permissions()->detach($permissions);
         return $this;
+    }
+
+    public function isAdmin()
+    {
+        foreach($this->roles()->get() as $role) {
+            if($role->slug == 'admin') return true;
+        }
+        return false;
     }
 }

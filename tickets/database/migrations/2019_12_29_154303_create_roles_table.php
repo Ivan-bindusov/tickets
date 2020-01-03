@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UsersPermission extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class UsersPermission extends Migration
      */
     public function up()
     {
-        Schema::create('users_permissions', function (Blueprint $table) {
+        Schema::create('roles', function(Blueprint $table){
             $table->increments('id');
 
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('permission_id');
+            $table->string('title');
+            $table->string('slug');
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('permission_id')->references('id')->on('permissions');
+            $table->timestamps();
         });
     }
 
